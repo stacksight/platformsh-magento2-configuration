@@ -90,6 +90,8 @@ class Platformsh
 
         $this->clearTemp();
 
+        $this->enableModules();
+
         $this->compile();
 
         $this->log("Copying read/write directories to temp directory.");
@@ -100,6 +102,16 @@ class Platformsh
             $this->execute(sprintf('rm -rf %s', $dir));
             $this->execute(sprintf('mkdir %s', $dir));
         }
+    }
+
+    /**
+     * Enable modules.
+     */
+    public function enableModules()
+    {
+        $this->log("Enable modules.");
+
+        $this->execute("php bin/magento module:enable --all");
     }
 
     /**
