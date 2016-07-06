@@ -92,6 +92,8 @@ class Platformsh
 
         $this->enableModules();
 
+        $this->deploySampleData();
+
         $this->compile();
 
         $this->log("Copying read/write directories to temp directory.");
@@ -102,6 +104,16 @@ class Platformsh
             $this->execute(sprintf('rm -rf %s', $dir));
             $this->execute(sprintf('mkdir %s', $dir));
         }
+    }
+
+     /**
+     * Deploy sample data.
+     */
+    public function deploySampleData() 
+    {
+        $this->log("Deploy sample data.");
+
+        $this->execute("php bin/magento sampledata:deploy");
     }
 
     /**
