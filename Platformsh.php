@@ -107,6 +107,7 @@ class Platformsh
      */
     public function catalogImageResize() 
     {
+        $this->execute("cp -R vendor/magento/module-cms-sample-data/fixtures/styles.css pub/media/");
         $this->execute("cp -R vendor/magento/sample-data-media/* pub/media/");
            
         $this->log("Catalog image resize.");
