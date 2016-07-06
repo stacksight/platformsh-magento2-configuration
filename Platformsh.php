@@ -90,12 +90,12 @@ class Platformsh
 
         $this->clearTemp();
 
-        $this->log("Clear dirs.");
+        // $this->log("Clear dirs.");
 
-        foreach ($this->platformReadWriteDirs as $dir) {
-            $this->execute(sprintf('rm -rf %s', $dir));
-            $this->execute(sprintf('mkdir %s', $dir));
-        }
+        // foreach ($this->platformReadWriteDirs as $dir) {
+        //     $this->execute(sprintf('rm -rf %s', $dir));
+        //     $this->execute(sprintf('mkdir %s', $dir));
+        // }
     }
 
     /**
@@ -104,6 +104,7 @@ class Platformsh
     public function catalogImageResize() 
     {
         $this->execute("cp -R vendor/magento/module-cms-sample-data/fixtures/styles.css pub/media/");
+        
         $this->execute("cp -R vendor/magento/sample-data-media/* pub/media/");
            
         $this->log("Catalog image resize.");
@@ -158,7 +159,7 @@ class Platformsh
         $this->log("Compiling generated files.");
 
         $this->execute("php bin/magento setup:di:compile");
-        
+
         if(file_exists('var/di/relations.ser')){
             $this->execute("rm var/di/relations.ser");
         }
