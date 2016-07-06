@@ -92,8 +92,6 @@ class Platformsh
 
         $this->enableModules();
 
-        $this->deploy();
-
         $this->deploySampleData();
 
         $this->compile();
