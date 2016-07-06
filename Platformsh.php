@@ -90,12 +90,6 @@ class Platformsh
 
         $this->clearTemp();
 
-        $this->enableModules();
-
-        $this->deploySampleData();
-
-        $this->compile();
-
         $this->log("Copying read/write directories to temp directory.");
 
         foreach ($this->platformReadWriteDirs as $dir) {
@@ -104,6 +98,12 @@ class Platformsh
             $this->execute(sprintf('rm -rf %s', $dir));
             $this->execute(sprintf('mkdir %s', $dir));
         }
+
+        $this->enableModules();
+
+        $this->deploySampleData();
+
+        $this->compile();
     }
 
      /**
