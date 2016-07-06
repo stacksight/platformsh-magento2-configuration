@@ -90,18 +90,16 @@ class Platformsh
 
         $this->clearTemp();
 
-        $this->compile();
+        // // $this->compile();
 
-        //$this->enableModules();
+        // $this->log("Copying read/write directories to temp directory.");
 
-        $this->log("Copying read/write directories to temp directory.");
-
-        foreach ($this->platformReadWriteDirs as $dir) {
-            $this->execute(sprintf('mkdir -p ./init/%s', $dir));
-            $this->execute(sprintf('/bin/bash -c "shopt -s dotglob; cp -R %s/* ./init/%s/"', $dir, $dir));
-            $this->execute(sprintf('rm -rf %s', $dir));
-            $this->execute(sprintf('mkdir %s', $dir));
-        }
+        // foreach ($this->platformReadWriteDirs as $dir) {
+        //     $this->execute(sprintf('mkdir -p ./init/%s', $dir));
+        //     $this->execute(sprintf('/bin/bash -c "shopt -s dotglob; cp -R %s/* ./init/%s/"', $dir, $dir));
+        //     $this->execute(sprintf('rm -rf %s', $dir));
+        //     $this->execute(sprintf('mkdir %s', $dir));
+        // }
     }
 
     /**
@@ -145,6 +143,16 @@ class Platformsh
     }
 
     /**
+     * Compile the generated files.
+     */
+    public function compileFull()
+    {
+        $this->log("Compiling generated files.");
+
+        $this->execute("php bin/magento setup:di:compile");
+    }
+
+    /**
      * Deploy application: copy writable directories back, install or update Magento data.
      */
     public function deploy()
@@ -168,6 +176,7 @@ class Platformsh
         $this->processMagentoMode();
         $this->disableGoogleAnalytics();
         $this->deploySampleData();
+        $this->compileFull();
     }
 
     /**
