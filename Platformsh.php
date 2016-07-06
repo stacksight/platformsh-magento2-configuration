@@ -105,6 +105,17 @@ class Platformsh
     /**
      * Deploy static data.
      */
+    public function catalogImageResize() 
+    {
+        $this->execute("cp -R vendor/magento/sample-data-media/* pub/media/");
+           
+        $this->log("Catalog image resize.");
+
+        $this->execute("php bin/magento catalog:images:resize");
+    }
+    /**
+     * Deploy static data.
+     */
     public function deployStaticContent() 
     {
         $this->log("Deploy static content.");
@@ -176,6 +187,8 @@ class Platformsh
         $this->processMagentoMode();
         $this->disableGoogleAnalytics();
         $this->deploySampleData();
+        $this->deployStaticContent();
+        $this->catalogImageResize();
         $this->compileFull();
     }
 
