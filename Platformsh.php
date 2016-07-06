@@ -104,6 +104,16 @@ class Platformsh
         }
     }
 
+    /**
+     * Deploy static data.
+     */
+    public function deployStaticContent() 
+    {
+        $this->log("Deploy static content.");
+
+        $this->execute("php bin/magento setup:static-content:deploy");
+    }
+
      /**
      * Deploy sample data.
      */
@@ -533,7 +543,7 @@ class Platformsh
         $this->log("Set Magento application to '$desiredApplicationMode' mode");
         $this->log("Changing application mode.");
         $this->execute("cd bin/; /usr/bin/php ./magento deploy:mode:set $desiredApplicationMode --skip-compilation");
-        if ($desiredApplicationMode == self::MAGENTO_DEVELOPER_MODE) {
+        // if ($desiredApplicationMode == self::MAGENTO_DEVELOPER_MODE) {
             $locales = '';
             $output = $this->executeDbQuery("select value from core_config_data where path='general/locale/code';");
             if (is_array($output) && count($output) > 1) {
@@ -544,6 +554,6 @@ class Platformsh
             $logMessage = $locales ? "Generating static content for locales $locales." : "Generating static content.";
             $this->log($logMessage);
             $this->execute("cd bin/; /usr/bin/php ./magento setup:static-content:deploy $locales");
-        }
+        // }
     }
 }
