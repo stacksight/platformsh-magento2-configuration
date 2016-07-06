@@ -87,9 +87,17 @@ class Platformsh
     public function build()
     {
         $this->log("Start build.");
+
         $this->clearTemp();
+
         $this->compile();
+
+        //$this->enableModules();
+
+        $this->deploySampleData();
+
         $this->log("Copying read/write directories to temp directory.");
+
         foreach ($this->platformReadWriteDirs as $dir) {
             $this->execute(sprintf('mkdir -p ./init/%s', $dir));
             $this->execute(sprintf('/bin/bash -c "shopt -s dotglob; cp -R %s/* ./init/%s/"', $dir, $dir));
@@ -125,7 +133,7 @@ class Platformsh
     {
         $this->log("Compiling generated files.");
 
-        $this->execute("php bin/magento setup:di:compile");
+        $this->execute("php bin/magento setup:di:compile-multi-tenant");
     }
 
     /**
