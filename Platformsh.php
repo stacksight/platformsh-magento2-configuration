@@ -94,6 +94,7 @@ class Platformsh
 
         foreach ($this->platformReadWriteDirs as $dir) {
             $this->execute(sprintf('rm -rf %s', $dir));
+            $this->execute(sprintf('mkdir %s', $dir));
         }
     }
 
