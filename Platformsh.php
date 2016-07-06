@@ -94,8 +94,6 @@ class Platformsh
 
         //$this->enableModules();
 
-        $this->deploySampleData();
-
         $this->log("Copying read/write directories to temp directory.");
 
         foreach ($this->platformReadWriteDirs as $dir) {
@@ -159,6 +157,7 @@ class Platformsh
         }
         $this->processMagentoMode();
         $this->disableGoogleAnalytics();
+        $this->deploySampleData();
     }
 
     /**
