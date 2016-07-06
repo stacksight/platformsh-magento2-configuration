@@ -158,6 +158,10 @@ class Platformsh
         $this->log("Compiling generated files.");
 
         $this->execute("php bin/magento setup:di:compile");
+        
+        if(file_exists('var/di/relations.ser')){
+            $this->execute("rm var/di/relations.ser");
+        }
     }
 
     /**
